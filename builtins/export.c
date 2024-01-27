@@ -60,8 +60,10 @@ void	modify_string_exp(t_gbl *gbl, int i)
 		j++;
 	while (gbl->input[j])
 	{
-		if (gbl->input[j] == '\"')
+		if (gbl->input[j] == '\"' && gbl->input[j + 1] != '\0')
 			j++;
+		if (gbl->input[j] == '\"' && gbl->input[j + 1] == '\0')
+			break ;
 		gbl->exp_env[i][k] = gbl->input[j];
 		j++;
 		k++;

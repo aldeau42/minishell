@@ -61,8 +61,10 @@ void	modify_string_env(char *arg, t_gbl *gbl, int i)
 	k = 0;
 	while (arg[j])
 	{
-		if (arg[j] == '\"')
+		if (arg[j] == '\"' && arg[j + 1] != '\0')
 			j++;
+		if (arg[j] == '\"' && arg[j + 1] == '\0')
+			break ;
 		gbl->mini_env[i][k] = arg[j];
 		k++;
 		j++;
