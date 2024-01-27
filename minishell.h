@@ -52,6 +52,8 @@ typedef struct s_gbl
 	char	**mini_env;
 	char	**exp_env;
 	char	*input;
+	char	*new_line;
+	int		printexp;
 	char	*i_v;
 	char	*path_temp;
 	int		st;

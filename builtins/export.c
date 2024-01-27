@@ -18,7 +18,9 @@ void	print_export(t_gbl *gbl)
 
 	i = -1;
 	while (gbl->exp_env[++i] != NULL)
+	{
 		printf("declare -x %s\n", gbl->exp_env[i]);
+	}
 }
 
 void	swap_export(t_gbl *gbl)
@@ -40,10 +42,36 @@ void	swap_export(t_gbl *gbl)
 	}
 }
 
+void	modify_string_exp(t_gbl *gbl, int i)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (gbl->input[j] == ' ' || gbl->input[j] == '\t'
+		|| gbl->input[j] == '\n')
+		j++;
+	while (gbl->input[j] != ' ' && gbl->input[j] != '\t'
+		&& gbl->input[j] != '\n')
+		j++;
+	while (gbl->input[j] == ' ' || gbl->input[j] == '\t'
+		|| gbl->input[j] == '\n')
+		j++;
+	while (gbl->input[j])
+	{
+		if (gbl->input[j] == '\"')
+			j++;
+		gbl->exp_env[i][k] = gbl->input[j];
+		j++;
+		k++;
+	}
+	gbl->exp_env[i][k] = '\0';
+}
+
 void	add_export(char *input, t_gbl *gbl)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (gbl->exp_env[i])
@@ -54,16 +82,12 @@ void	add_export(char *input, t_gbl *gbl)
 		i++;
 	}
 	if (gbl->exp_env[i] == 0)
-	{
 		gbl->exp_env[i] = gc_malloc(&gbl->gc, sizeof(char) * 32768);
-	}
-	j = -1;
-	while (input[++j])
-		gbl->exp_env[i][j] = input[j];
-	gbl->exp_env[i][j] = '\0';
+	modify_string_exp(gbl, i);
+	gbl->new_line = gbl->exp_env[i];
 	modif_exp(gbl, i);
 	i++;
-	gbl->exp_env[i] = 0;
+	gbl->exp_env[i] = NULL;
 	swap_export(gbl);
 }
 
@@ -75,7 +99,9 @@ int	own_export(char *input, t_gbl *gbl)
 	if (!args[1])
 	{
 		swap_export(gbl);
-		print_export(gbl);
+		if (!gbl->printexp)
+			print_export(gbl);
+		gbl->printexp = 1;
 		ft_free_tab(args);
 		return (0);
 	}
@@ -88,7 +114,7 @@ int	own_export(char *input, t_gbl *gbl)
 		return (0);
 	}
 	add_export(args[1], gbl);
-	add_env(args[1], gbl);
+	add_env(gbl->new_line, gbl);
 	ft_free_tab(args);
 	return (0);
 }

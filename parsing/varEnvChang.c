@@ -25,8 +25,7 @@ int	add_var3(t_gbl *gbl, t_lst *lst)
 
 int	add_var2(t_gbl *gbl, int i, int j, int k)
 {
-	while (gbl->mini_env[j][ft_strlen(gbl->path_temp) + k + 1] != ' '
-		&& gbl->mini_env[j][ft_strlen(gbl->path_temp) + k + 1] != 0)
+	while (gbl->mini_env[j][ft_strlen(gbl->path_temp) + k + 1] != 0)
 	{
 		gbl->i_v[i + k] = gbl->mini_env[j]
 		[ft_strlen(gbl->path_temp) + k + 1];

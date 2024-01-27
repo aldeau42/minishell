@@ -16,7 +16,7 @@ int	if_builtin_no_redir(t_gbl *gbl, char *prompt, t_lst *lst)
 {
 	if (ft_strncmp(prompt, "export", 6) == 0 && gbl->cmd_num == 1)
 		own_export(prompt, gbl);
-	if (ft_strncmp(prompt, "unset", 5) == 0 && gbl->cmd_num == 1)
+	else if (ft_strncmp(prompt, "unset", 5) == 0 && gbl->cmd_num == 1)
 		own_unset(prompt, gbl);
 	else if (ft_strncmp(prompt, "exit", 4) == 0 && gbl->cmd_num == 1)
 		own_exit(prompt, gbl, lst);

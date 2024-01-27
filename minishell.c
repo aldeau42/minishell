@@ -21,6 +21,7 @@ void	main_init(t_gbl *gbl)
 	gbl->path = 0;
 	gbl->next_pipe = 0;
 	gbl->cat = 0;
+	gbl->printexp = 0;
 }
 
 void	treat_input(t_gbl *gbl, t_lst *lst)
@@ -52,7 +53,7 @@ void	main_loop(t_gbl *gbl, t_lst *lst)
 		main_init(gbl);
 		if (g_signal_flag == 42 || g_signal_flag == 43)
 			g_signal_flag = 0;
-		gbl->input = readline("🎄❄️ ☃️  \033\e[1m\e[36mMinishell ➤ \033[0m");
+		gbl->input = readline("🤖 \033\e[1m\e[36mMinishell ➤ \033[0m");
 		if (g_signal_flag == 130)
 		{
 			gbl->exit_ret = 130;

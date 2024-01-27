@@ -52,10 +52,27 @@ void	own_env(t_gbl *gbl)
 		printf("%s\n", gbl->mini_env[i]);
 }
 
+void	modify_string_env(char *arg, t_gbl *gbl, int i)
+{
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (arg[j])
+	{
+		if (arg[j] == '\"')
+			j++;
+		gbl->mini_env[i][k] = arg[j];
+		k++;
+		j++;
+	}
+	gbl->mini_env[i][k] = '\0';
+}
+
 void	add_env(char *arg, t_gbl *gbl)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	if (is_equal(arg) == 1)
@@ -69,10 +86,7 @@ void	add_env(char *arg, t_gbl *gbl)
 		}
 		if (gbl->mini_env[i] == 0)
 			gbl->mini_env[i] = gc_malloc(&gbl->gc, sizeof(char) * 32768);
-		j = -1;
-		while (arg[++j])
-			gbl->mini_env[i][j] = arg[j];
-		gbl->mini_env[i][j] = '\0';
+		modify_string_env(arg, gbl, i);
 		i++;
 		gbl->mini_env[i] = 0;
 	}
